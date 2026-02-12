@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <h2>All Blog Drafts</h2>
+  <p>Track AI-generated drafts, manual entries, and approval status from one place.</p>
+  <div class="grid">
+    {% for post in posts %}
+      <article class="card">
+        <div class="card-header">
+          <h3>{{ post.title }}</h3>
+          <span class="status {{ post.status }}">{{ post.status.replace('_', ' ') }}</span>
+        </div>
+        <p class="keywords">Keywords: {{ post.keywords }}</p>
+        <p>{{ post.content[:140] }}...</p>
+        <div class="card-footer">
+          <a class="button" href="{{ url_for('view_post', post_id=post.id) }}">View</a>
+          {% if post.social_posted %}
+            <span class="badge">Shared</span>
+          {% endif %}
+        </div>
+      </article>
+    {% else %}
+      <p>No drafts yet. Create one to get started!</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

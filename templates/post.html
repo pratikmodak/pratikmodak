@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <div class="banner">
+    <h2>{{ post.banner }}</h2>
+    <p>Status: <span class="status {{ post.status }}">{{ post.status.replace('_', ' ') }}</span></p>
+  </div>
+  <article class="post">
+    <h3>{{ post.title }}</h3>
+    <p class="keywords">Keywords: {{ post.keywords }}</p>
+    <pre class="content">{{ post.content }}</pre>
+    <div class="meta">
+      <p>Approved by: {{ post.approved_by or 'Pending' }}</p>
+      <p>Last updated: {{ post.updated_at }}</p>
+    </div>
+    {% if post.status == 'approved' %}
+      <form method="post" action="{{ url_for('social_post', post_id=post.id) }}">
+        <button class="button primary" type="submit">Post to Social Media</button>
+        {% if post.social_posted %}
+          <span class="badge">Shared</span>
+        {% endif %}
+      </form>
+    {% else %}
+      <p class="muted">Social posting unlocks after admin approval.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

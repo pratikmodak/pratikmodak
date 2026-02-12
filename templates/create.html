@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <h2>Create a Draft</h2>
+  <p>Provide a topic and keywords for the AI draft, or paste manual content for a human-written post.</p>
+  <form class="form" action="{{ url_for('generate') }}" method="post">
+    <label>
+      Topic
+      <input type="text" name="topic" placeholder="AI in Retail" />
+    </label>
+    <label>
+      Keywords
+      <input type="text" name="keywords" placeholder="personalization, automation, forecasting" />
+    </label>
+    <label>
+      Banner Text (optional for manual drafts)
+      <input type="text" name="banner" placeholder="AI Retail Insights" />
+    </label>
+    <label>
+      Manual Content (optional)
+      <textarea name="manual_content" rows="8" placeholder="Paste your draft here for review..."></textarea>
+    </label>
+    <button class="button primary" type="submit">Save Draft</button>
+  </form>
+</section>
+{% endblock %}
