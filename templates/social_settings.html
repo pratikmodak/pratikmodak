@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <h2>Social Media Configuration</h2>
+  <p>Connect your LinkedIn publisher account so approved blogs can be pushed directly.</p>
+
+  <form class="form" method="post" action="{{ url_for('social_settings_save') }}">
+    <label>
+      Platform
+      <select name="platform">
+        <option value="linkedin" selected>LinkedIn</option>
+      </select>
+    </label>
+    <label>
+      Organization Name
+      <input type="text" name="org_name" placeholder="Your Brand Pvt Ltd" required />
+    </label>
+    <label>
+      Author URN
+      <input type="text" name="author_urn" placeholder="urn:li:person:xxxx or urn:li:organization:xxxx" required />
+    </label>
+    <label>
+      Access Token
+      <input type="password" name="access_token" placeholder="LinkedIn OAuth access token" required />
+    </label>
+    <button class="button primary" type="submit">Save Social Config</button>
+  </form>
+
+  <h3>Saved Configurations</h3>
+  <div class="grid">
+    {% for cfg in configs %}
+      <article class="card">
+        <h4>{{ cfg.platform|title }} · {{ cfg.org_name }}</h4>
+        <p>Author: {{ cfg.author_urn }}</p>
+        <p>Status: <span class="status {% if cfg.is_active %}approved{% else %}needs_edit{% endif %}">{% if cfg.is_active %}active{% else %}inactive{% endif %}</span></p>
+        <p class="muted">Updated: {{ cfg.updated_at }}</p>
+      </article>
+    {% else %}
+      <p>No social account configured yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

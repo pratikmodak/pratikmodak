@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <h2>Admin Approval Queue</h2>
+  <p>Review AI-generated content, alter copy as needed, and approve for publishing + social distribution.</p>
+  <div class="grid">
+    {% for post in posts %}
+      <article class="card">
+        <div class="card-header">
+          <h3>{{ post.title }}</h3>
+          <span class="status pending">pending</span>
+        </div>
+        <p class="keywords">Keywords: {{ post.keywords }}</p>
+        <p>{{ post.content[:170] | striptags }}...</p>
+        <div class="card-footer">
+          <a class="button" href="{{ url_for('admin_post', post_id=post.id) }}">Review</a>
+        </div>
+      </article>
+    {% else %}
+      <p>All clear: no pending drafts.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

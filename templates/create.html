@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <h2>Create a Long-Form Blog</h2>
+  <p>Provide heading + keywords. The AI agent builds a human-like blog with H1/H2/H3, bullets, and strategy sections.</p>
+
+  <div class="trend-strip">
+    <strong>Trending prompts:</strong>
+    {% for trend in trending_samples %}
+      <span class="badge">{{ trend }}</span>
+    {% endfor %}
+  </div>
+
+  <form class="form" action="{{ url_for('generate') }}" method="post">
+    <label>
+      Heading
+      <input type="text" name="heading" placeholder="How AI Agents Are Reshaping B2B Content Teams" />
+    </label>
+    <label>
+      Keywords
+      <input type="text" name="keywords" placeholder="ai agent, b2b content, engagement, seo" />
+    </label>
+    <label>
+      Banner Text (optional for manual drafts)
+      <input type="text" name="banner" placeholder="AI Agentic Content Playbook" />
+    </label>
+    <label>
+      Manual Content (optional)
+      <textarea name="manual_content" rows="8" placeholder="Paste your own long-form content here if not using AI generation."></textarea>
+    </label>
+    <button class="button primary" type="submit">Generate & Save Draft</button>
+  </form>
+</section>
+{% endblock %}

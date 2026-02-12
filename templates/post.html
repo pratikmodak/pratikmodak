@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel">
+  <div class="banner">
+    <h2>{{ post.banner }}</h2>
+    <p>Status: <span class="status {{ post.status }}">{{ post.status.replace('_', ' ') }}</span></p>
+  </div>
+
+  <article class="post">
+    <p class="keywords">Keywords: {{ post.keywords }}</p>
+    <div class="content rendered">{{ post.content | safe }}</div>
+    <div class="meta">
+      <p>Approved by: {{ post.approved_by or 'Pending' }}</p>
+      <p>Last updated: {{ post.updated_at }}</p>
+      {% if post.social_post_url %}
+        <p>Social result: {{ post.social_post_url }}</p>
+      {% endif %}
+    </div>
+
+    {% if post.status == 'approved' %}
+      {% if social_cfg %}
+      <form method="post" action="{{ url_for('social_post', post_id=post.id) }}">
+        <button class="button primary" type="submit">Publish to LinkedIn</button>
+        {% if post.social_posted %}
+          <span class="badge">Posted</span>
+        {% endif %}
+      </form>
+      {% else %}
+      <p class="muted">No LinkedIn account configured yet. Add credentials in Social Settings.</p>
+      <a class="button" href="{{ url_for('social_settings') }}">Open Social Settings</a>
+      {% endif %}
+    {% else %}
+      <p class="muted">Social publishing is available only after admin approval.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}
