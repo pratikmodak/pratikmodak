@@ -1,1 +1,4 @@
 Flask==3.0.3
+pandas==2.2.2
+yfinance==0.2.52
+python-telegram-bot==21.6
